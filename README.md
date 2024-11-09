@@ -35,7 +35,7 @@ Program ini melakukan perhitungan diskon menggunakan aritmatika dasar. Setelah p
 
 ## Hasil Program:
 Program akan menampilkan harga akhir, penghematan yang didapatkan, dan mencatat riwayat diskon yang telah dilakukan dalam JTextArea.
-hasil ketika dijalankan (https://github.com/atmafathulhadi/Tugas3-PenghitunngDiskon/blob/main/Screenshot%202024-11-10%20044631.png)
+hasil ketika dijalankan ![Screenshot%202024-11-10%20044631](https://github.com/atmafathulhadi/Tugas3-PenghitunngDiskon/blob/main/Screenshot%202024-11-10%20044631.png)
 
 ## Indikator Penilaian:
 
