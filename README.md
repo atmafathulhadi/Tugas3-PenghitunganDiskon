@@ -5,39 +5,100 @@
 Nama: Atma Fathul Hadi  
 NPM: 2210010425  
 
-## 1. Deskripsi Program:
-Program ini adalah aplikasi GUI untuk menghitung diskon harga barang. Pengguna memasukkan harga asli, memilih persentase diskon melalui slider atau combo box, dan dapat memasukkan kode kupon untuk tambahan diskon. Program kemudian menampilkan harga akhir setelah diskon dan penghematan yang didapatkan.
+## 1. Deskripsi Program
+Program ini adalah aplikasi GUI berbasis Java untuk menghitung diskon harga barang. Pengguna memasukkan harga asli, memilih persentase diskon melalui slider atau combo box, dan dapat memasukkan kode kupon untuk tambahan diskon. Program ini akan menampilkan harga akhir setelah diskon serta penghematan yang diperoleh.
 
-## 2. Komponen GUI:
-Program ini dibuat menggunakan komponen GUI berikut:
-- **JFrame**: Untuk kerangka utama aplikasi
-- **JPanel**: Sebagai wadah komponen GUI
-- **JLabel**: Untuk label teks seperti "Harga" dan "Kode Diskon"
-- **JTextField**: Untuk memasukkan harga asli dan kode diskon
-- **JComboBox**: Untuk memilih persentase diskon
-- **JSlider**: Sebagai alternatif untuk memilih persentase diskon
-- **JButton**: Untuk tombol "Hitung" dan "Keluar"
-- **JTextArea**: Untuk menampilkan riwayat perhitungan diskon
+## 2. Komponen GUI
+Aplikasi ini dibuat menggunakan komponen GUI berikut:
 
-## 3. Logika Program:
-Program ini melakukan perhitungan diskon menggunakan aritmatika dasar. Setelah pengguna memasukkan harga asli dan memilih diskon, aplikasi menghitung harga akhir dan penghematan, kemudian menampilkan hasilnya. Jika pengguna memasukkan kode kupon yang valid ("DISKON10"), diskon tambahan 10% diterapkan.
+- **JFrame**: Sebagai kerangka utama aplikasi
+- **JPanel**: Wadah komponen GUI
+- **JLabel**: Label teks untuk elemen seperti "Harga" dan "Kode Diskon"
+- **JTextField**: Input untuk harga asli dan kode diskon
+- **JComboBox**: Memilih persentase diskon (10%, 30%, 50%, dll.)
+- **JSlider**: Alternatif untuk memilih persentase diskon
+- **JButton**: Tombol untuk "Hitung" dan "Keluar"
+- **JTextArea**: Menampilkan riwayat perhitungan diskon
 
-## 4. Events:
-- **ActionListener pada tombol Hitung**: Melakukan perhitungan diskon ketika tombol ditekan
-- **ActionListener pada tombol Keluar**: Menutup program ketika tombol ditekan
-- **ChangeListener pada JSlider**: Menampilkan persentase diskon saat slider digeser
-- **ItemListener pada JComboBox**: Memperbarui slider saat persentase dipilih
+## 3. Logika Program
+Program melakukan perhitungan diskon sederhana menggunakan rumus aritmatika. Setelah pengguna memasukkan harga asli dan memilih diskon, aplikasi menghitung harga akhir dan penghematan, serta menampilkan hasilnya. Jika pengguna memasukkan kode kupon yang valid ("DISKON10"), diskon tambahan 10% akan diterapkan.
 
-## 5. Variasi Program:
-- **Kode Kupon**: Pengguna dapat memasukkan kode kupon untuk diskon tambahan.
-- **JSlider untuk Persentase Diskon**: Slider memberikan alternatif untuk memilih diskon dalam bentuk persen.
-- **Riwayat Perhitungan**: Semua perhitungan yang dilakukan ditampilkan dalam JTextArea untuk riwayat.
+### Kode Terkait:
+```java
+private void hitungDiskon() {
+    try {
+        double harga = Double.parseDouble(inputharga.getText());
+        int diskon = jSliderValue.getValue();
+        double penghematan = harga * diskon / 100;
+        double hargaSetelahDiskon = harga - penghematan;
 
-## Hasil Program:
-Program akan menampilkan harga akhir, penghematan yang didapatkan, dan mencatat riwayat diskon yang telah dilakukan dalam JTextArea.
+        hasil.setText("Harga Akhir: Rp " + hargaSetelahDiskon + ", Penghematan: Rp " + penghematan);
+
+        // Simpan riwayat perhitungan
+        String riwayatEntry = "Harga: Rp " + harga + ", Diskon: " + diskon;
+        riwayatList.add(riwayatEntry);
+
+        StringBuilder sb = new StringBuilder();
+        for (String entry : riwayatList) {
+            sb.append(entry).append("\n");
+        }
+        jTextArea1.setText(sb.toString());
+    } catch (NumberFormatException e) {
+        JOptionPane.showMessageDialog(this, "Masukkan harga yang valid!", "Error", JOptionPane.ERROR_MESSAGE);
+    }
+}
+```
+
+## 4. Events
+- **ActionListener pada tombol Hitung**: Memanggil fungsi `hitungDiskon()` untuk menghitung dan menampilkan hasil saat tombol "Hitung" ditekan.
+   ```java
+   hitung.addActionListener(new java.awt.event.ActionListener() {
+       public void actionPerformed(java.awt.event.ActionEvent evt) {
+           hitungDiskon();
+       }
+   });
+   ```
+- **ActionListener pada tombol Keluar**: Menutup aplikasi saat tombol "Keluar" ditekan.
+   ```java
+   keluar.addActionListener(new ActionListener() {
+       public void actionPerformed(ActionEvent e) {
+           System.exit(0);
+       }
+   });
+   ```
+- **ChangeListener pada JSlider**: Memperbarui nilai persentase diskon pada combo box dan tooltip saat slider digeser.
+   ```java
+   jSliderValue.addChangeListener(new ChangeListener() {
+       public void stateChanged(ChangeEvent evt) {
+           int diskon = jSliderValue.getValue();
+           jComboBox1.setSelectedItem(diskon + "%");
+           jSliderValue.setToolTipText(diskon + "%");
+       }
+   });
+   ```
+
+## 5. Variasi Program
+- **Kode Kupon**: Pengguna dapat memasukkan kode kupon "DISKON10" untuk diskon tambahan 10%.
+- **Slider untuk Persentase Diskon**: Alternatif pilihan diskon melalui slider.
+- **Riwayat Perhitungan**: Riwayat perhitungan ditampilkan di JTextArea.
+
+### Kode Terkait Riwayat Perhitungan:
+```java
+String riwayatEntry = "Harga: Rp " + harga + ", Diskon: " + diskon;
+riwayatList.add(riwayatEntry);
+
+StringBuilder sb = new StringBuilder();
+for (String entry : riwayatList) {
+    sb.append(entry).append("\n");
+}
+jTextArea1.setText(sb.toString());
+```
+
+## 6. Hasil Program
+Aplikasi menampilkan harga akhir, penghematan yang diperoleh, serta menyimpan dan menampilkan riwayat perhitungan diskon pada JTextArea.
 hasil ketika dijalankan ![Screenshot%202024-11-10%20044631](https://github.com/atmafathulhadi/Tugas3-PenghitunngDiskon/blob/main/Screenshot%202024-11-10%20044631.png)
 
-## Indikator Penilaian:
+## 7. Indikator Penilaian
 
 | No  | Komponen         |  Persentase  |
 | :-: | ---------------- |   :-----:    |
@@ -48,13 +109,11 @@ hasil ketika dijalankan ![Screenshot%202024-11-10%20044631](https://github.com/a
 |  5  | Memenuhi Variasi |    30%       |
 |     | **TOTAL**        | 100%         |
 
-## Cara Menjalankan Program:
-1. Buka program di lingkungan Java IDE seperti NetBeans atau Eclipse.
-2. Jalankan program dan masukkan harga asli pada kolom "Harga".
-3. Pilih persentase diskon melalui combo box atau slider.
-4. Jika memiliki kode kupon, masukkan di kolom "Kode Diskon".
-5. Tekan tombol "Hitung" untuk mendapatkan harga akhir dan penghematan.
-6. Riwayat perhitungan diskon akan ditampilkan di area riwayat.
-7. Tekan tombol "Keluar" untuk menutup aplikasi.
-
----
+## 8. Cara Menjalankan Program
+1. Buka program di IDE seperti NetBeans atau Eclipse.
+2. Jalankan program, masukkan harga asli pada kolom "Harga".
+3. Pilih diskon menggunakan combo box atau slider.
+4. Jika memiliki kode kupon "DISKON10", masukkan di kolom "Kode Diskon".
+5. Klik "Hitung" untuk melihat harga akhir dan penghematan.
+6. Riwayat perhitungan akan muncul di area riwayat.
+7. Klik "Keluar" untuk menutup aplikasi.
